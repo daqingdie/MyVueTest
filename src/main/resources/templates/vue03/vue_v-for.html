@@ -1,0 +1,44 @@
+<!--
+    标题:学习vue的v-for的用法
+    时间:2020.4.28
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的v-for的用法</title>
+</head>
+<body>
+<script src="js/vue.js"></script>
+<div id="app">
+    <!--使用v-for遍历数组的两种形式-->
+    <!--无下标值 格式为 item in items-->
+    <h2 v-for="item in arrayData">{{item}}</h2>
+    <!--有下标值，格式为 (item,index) in item-->
+    <h2 v-for="(item,index) in arrayData">{{index+1}}.{{item}}</h2>
+
+    <!--使用v-for遍历对象的两种形式-->
+    <!--直接获取属性的值 格式为 value in obj-->
+    <h2 v-for="value in objData">{{value}}</h2>
+    <!--获取属性名和属性值 格式为 (value,key) in obj-->
+    <h2 v-for="(value,key) in objData">{{key+":"+value}}</h2>
+
+    <!--在使用v-for时最好加上:key="item" ,这样数据结构会从数组转化为链表,从而提高插入的效率,高效更新虚拟DOM-->
+</div>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            arrayData: ["火影忍者","海贼王","哆啦a梦","蜡笔小新"],
+            objData: {
+                name: "小王",
+                age: 19,
+                phone: "110",
+            },
+        },
+    });
+</script>
+</body>
+</html>

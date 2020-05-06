@@ -1,0 +1,62 @@
+<!--
+    标题:学习vue的组件化的基本使用(3)
+    时间:2020.4.30
+    内容:（1）父组件访问子组件（$children,$refs(常用))
+        (2)子组件访问父组件（$parent）
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的组件化的基本使用(3)</title>
+</head>
+<body>
+<div id="app">
+    <cpn ref="aa"></cpn>
+    <button @Click="useSon">父组件访问子组件的方法(children)</button>
+
+    <!--使用$refs时要对组件进行ref=""命名-->
+    <button @Click="useSon2">父组件访问子组件的方法(refs)</button>
+</div>
+<template id="cpn">
+    <div>
+        <h2>子组件的内容</h2>
+        <button @Click="useFa">子组件访问父组件的方法</button>
+    </div>
+</template>
+<script src="js/vue.js"></script>
+<script>
+    const app=new Vue({
+        el: "#app",
+        components:{
+            cpn:{
+                template:"#cpn",
+                methods:{
+                    sayHello() {
+                        console.log("子组件的方法被调用");
+                    },
+                    useFa() {
+                        this.$parent.say();
+                    }
+                }
+            }
+        },
+        methods: {
+            useSon() {
+                //第一种方法，使用.$children会获取其所有子组件数组，然后根据下标确定对象，再调用对象中的属性或方法
+                this.$children[0].sayHello();
+            },
+            useSon2(name) {
+                //第二种方法，使用.$refs,格式为.$refs.名字.属性/方法，更常用
+                this.$refs.aa.sayHello();
+            },
+            say() {
+                console.log("父组件的方法被调用了");
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!--
+    标题:学习vue的v-on用法及其修饰符
+    时间:2020.4.27
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的v-on用法及其修饰符</title>
+</head>
+<body>
+<script src="js/vue.js"></script>
+<div id="app">
+    {{message1}}<br>
+    <button @Click="b1">按钮1</button>
+    <button @Click="b1()">按钮1</button><br>
+
+    <button @Click="b2">按钮2</button>
+    <button @Click="b2()">按钮2</button>
+    <button @Click="b2('abc')">按钮2</button>
+    <br/>
+
+    <button @Click="b3">按钮3</button>
+    <button @Click="b3()">按钮3</button>
+    <button @Click="b3('abc')">按钮3</button>
+    <button @Click="b3('abc','bcd')">按钮3</button>
+    <button @Click="b3('abc',$event)">按钮3</button><br>
+</div>
+<div id="app2" @Click="div">
+    {{message2}}<br>
+    <button @Click.stop="b1">按钮1</button><br>        <!--使用click.stop修饰时，会阻止冒泡事件，及点击按钮时仅会触发按钮事件，
+                                                    不会触发父控件的事件-->
+    <form action="es6">
+        <input type="text" @keyup.enter.stop="keyup" value=""> <!--使用keyup.键缩写/值来修饰，可限制触发事件的按键-->
+        <input type="submit" @Click.prevent.stop="submit" >     <!--使用.prevent修饰，可阻止标签的默认事件
+                                                                     修饰符可叠加使用-->
+
+    </form>
+
+
+
+</div>
+
+<script>
+    const app = new Vue({
+        el : '#app',
+        data : {
+            message1: "参数对v-on的影响",
+        },
+        methods : {
+            b1() {          //当方法无参市，在调用时可加（）不加（）均可，无明显区别
+                console.log("你点击了按钮1")
+            },
+            b2(a) {         /*当方法有一个参数时，调用时不加（），默认会传递当前的操作对象event
+                                                 调用时加（），但不传参数，默认该参数为“undefined”
+                                                 调用时加（），也加参数，则为正常调用*/
+                console.log("你点击了按钮2",a)
+            },
+            b3(a,b) {       /*当方法有两个以上参数时，调用时不加（），默认会传递当前的操作对象event为第一个参数，其余参数为“undefined”
+                                                     调用时加（），不传参数，所有参数均为“undefined”
+                                                     调用时加（），传一个参数，第一个参数为该参，其余为“undefined”
+                                                     调用时加（），传全部参数，正常调用
+                                                     调用时用“$event”传参可传入当前操作对象event
+                            */
+                console.log("你点击了按钮1",a,"+++",b)
+            },
+        }
+    });
+
+    const app2 = new Vue({
+        el:"#app2",
+        data:{
+            message2:"v-on的修饰符",
+        },
+        methods:{
+            b1() {
+                console.log("你点击了按钮1");
+            },
+            div(){
+                console.log("你点击了div");
+            },
+            submit() {
+                console.log("你点击了提交");
+            },
+            keyup() {
+                console.log("你输入了内容");
+            },
+        },
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!--
+    标题:学习vue的v-bind的操作
+    时间:2020.4.26
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的v-bind的操作</title>
+    <style type="text/css">
+        .active{                    /*在class类前面要加".",如果是上次用的v-cloak属性则要写成[v-cloak]*/
+            color: green;
+        }
+        .active2{
+            color:deepskyblue;
+        }
+        .select{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<script src="js/vue.js"></script>
+<div id="app" >
+    {{message}}
+    <h2 :class="{'active':isActive,'active2':isActive2}" >变颜色的文字</h2>  <!-- 参数为对象，格式:class="{key:value,……}},value放在vue中动态启动" -->
+    <h2 :class="['active','active2']" >文字</h2>     <!-- 参数为数组，当多个class属性冲突时，默认最后一个-->
+    <h2 :class="getClass()" >文字</h2>    <!--参数为方法，可根据方法直接返回对象或数组，-->
+    <button @click="change">变化</button>     <!--@Click时可shenglue()-->
+    <!--小练习：根据数据显示列表，第一个数据为红色，之后选择哪个数据，哪个数据就变红，其他变黑
+    个人思路：（1）数据为实体，属性为name（名字）和isSelect（是否选中），第一个数据isSelect为true，其余为false
+                （2）用isSelect控制class
+                （3）点击时，方法先将所有实体的isSelect转化为false，再将当前选中转为true-->
+    <ul>
+        <li v-for="movie in movies" :class="{'select':movie.isSelect}" @click="changeList(),movie.isSelect=!movie.isSelect">{{movie.name}}</li>
+    </ul>
+
+    <!--v-bind绑定style跟class相似-->
+    <p :style="{'font-size':fontSize+'px'}">v-bind在style的使用 <button @click="add">字体放大</button><button @click="sub">字体缩小</button></p>
+
+</div>
+<script>
+    let app=new Vue({
+        el:'#app',
+        data:{
+            message:'v-bind的用法',
+            isActive:true,
+            isActive2:false,
+            movies:[{name:'海贼王',isSelect:true},{name:'哆啦A梦',isSelect:false},
+                    {name:'火影忍者',isSelect:false},{name:'死神',isSelect:false}],
+            fontSize:28,
+        },
+        methods:{
+            change:function () {
+                console.log('点击了按钮');
+                    this.isActive=!this.isActive;
+                    this.isActive2=!this.isActive2;
+            },
+            getClass: function () {
+                return {'active':this.isActive,'active2':this.isActive2};
+                // return ['active','active2'];
+            },
+            changeList:function () {
+                for (let movie of this.movies) {
+                    movie.isSelect=false;
+                }
+            },
+            add:function () {
+                this.fontSize+=5;
+            },
+            sub:function () {
+                this.fontSize-=5;
+            }
+        }
+    })
+</script>
+</body>
+</html>

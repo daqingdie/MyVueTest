@@ -1,0 +1,89 @@
+<!--
+    标题:学习vue的组件的小练习
+    时间:2020.4.30
+    内容:计数器小实验，按钮在子组件中，显示在父组件中
+    思路：父组件有数据计数a，子组件也有数据计数b，初始值均为零
+          当按钮add点击时，子组件对a++，传到父组件，b=a
+
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的组件的小练习</title>
+</head>
+<body>
+<div id="app">
+    <cpn1 ></cpn1>
+</div>
+<template id="cpn1">
+    <div>
+        <h2>父组件的内容：计数：{{times}}</h2>
+        <cpn2  @sunadd="add" @sunsub="sub" :stime="times"></cpn2>
+    </div>
+</template>
+<template id="cpn2">
+    <div>
+        <h2>子组件的内容：
+            <button @Click="add">+</button>
+            <button @Click="sub">-</button>
+            {{stime}}
+        </h2>
+
+    </div>
+</template>
+<script src="js/vue.js"></script>
+<script>
+    Vue.component('cpn1',{
+        template:cpn1,
+        data:function () {
+            return{
+                times:0,
+            }
+        },
+        watch:{
+            times(){
+                console.log('time被改变')
+            }
+        },
+        methods:{
+            add(times) {
+                // console.log('父组件add被触发',times);
+                this.times=times;
+            },
+            sub(times) {
+                this.times=times;
+            }
+        }
+    })
+    Vue.component('cpn2',{
+        template:'#cpn2',
+        data:function () {
+            return{
+                stimes:0,
+            }
+        },
+        props:{
+            stime:Number,
+        },
+        methods:{
+            add() {
+                this.stimes++;
+                 // console.log('子组件add被点击',this.stimes);
+                this.$emit('sunadd',this.stimes)
+            },
+            sub() {
+                this.stimes--;
+                this.$emit('sunsub',this.stimes)
+            },
+        }
+    })
+
+    const app=new Vue({
+        el: "#app",
+    })
+</script>
+
+</body>
+</html>

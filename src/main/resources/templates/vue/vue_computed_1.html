@@ -1,0 +1,68 @@
+<!--
+    标题:学习vue的computed
+    时间:2020.4.26
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中计算属性的学习（1）</title>
+</head>
+<body>
+<div id="app">
+    <h2>电影总价格为：{{moviesPrices}}</h2>
+    <h2>电影总价格为：{{moviesPrices2}}</h2>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            movies:[{name:'海贼王',price:20},
+                {name:'火影忍者',price:30},
+                {name:'哆啦A梦',price:25},
+                {name:'进击的巨人',price:29}]
+        },
+        /*
+        computed中有缓存，当多次获取同一值时仅会调用一次方法
+        当值发生改变时，也会重新调用方法
+        */
+        computed:{
+            moviesPrices() {
+                let sum=0;
+                for (let movie of this.movies) {
+                    sum+=movie.price;
+                }
+                return sum;
+            },
+            /*
+            计算属性的原格式为：
+            属性名：{
+                get方法，
+                set方法，
+            }
+            使用该属性时会默认调用get方法返回值，对属性赋值时会调用set方法回调
+            当仅用到get方法时，可简写为：
+            属性名：function（）{};
+             */
+            moviesPrices2:{
+                set:function (sum) {
+                    console.log(sum);
+                    this.movies[0].price=sum;
+                },
+                get:function () {
+                    let sum=0;
+                    for (let movie of this.movies) {
+                        sum+=movie.price;
+                    }
+                    return sum;
+                }
+            }
+        },
+       
+    })
+</script>
+</body>
+</html>

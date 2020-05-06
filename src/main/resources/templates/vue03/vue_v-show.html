@@ -1,0 +1,38 @@
+<!--
+    标题:学习vue的v-show的用法
+    时间:2020.4.28
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的v-show的用法</title>
+</head>
+<body>
+<script src="js/vue.js"></script>
+<div id="app">
+    <!-- 使用v-if为false时，直接在DOM中删除该元素，适合需要切换一次的元素 -->
+    <h2 v-if="isShow">{{ifMessage}}</h2>
+    <!-- 使用v-show为false时，会在元素中添加display元素并定义为none，元素还在，适合需要经常切换的元素 -->
+    <h2 v-show="isShow">{{showMessage}}</h2>
+    <button @Click="change">切换</button>
+</div>
+<script>
+    const app=new Vue({
+        el:"#app",
+        data: {
+            ifMessage: "使用v-if的文字",
+            showMessage:"使用v-show的文字",
+            isShow:true
+        },
+        methods:{
+            change() {
+                this.isShow=!this.isShow;
+            }
+        }
+    })
+</script>
+</body>
+</html>

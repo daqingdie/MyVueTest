@@ -1,0 +1,48 @@
+<!--
+    标题:使用vue来做一个购物车界面
+    时间:2020.4.28
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <link rel="stylesheet" href="css/cart.css">
+</head>
+<body>
+<div id="app">
+    <h2 v-if="isBooks">暂无选购商品</h2>
+    <div v-else>
+        <h2>{{message}}</h2>
+        <table >
+            <thead>
+            <tr>
+                <th></th>
+                <th>书籍名称</th>
+                <th>出版日期</th>
+                <th>价格</th>
+                <th>购买数量</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(b,index) in books">
+                <td>{{b.id}}</td>
+                <td>{{b.name}}</td>
+                <td>{{b.btime}}</td>
+                <td>{{b.price|showPrice}}</td>
+                <td><button @Click="change(b.num,b.id)" >-</button>{{b.num}}<button @Click="b.num++">+</button></td>
+                <td ><button @Click="arm(b.id)">移除</button></td>
+            </tr>
+            </tbody>
+        </table>
+        <h2>总价：{{sumP|showPrice}}</h2>
+    </div>
+</div>
+
+<script src="js/vue.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>

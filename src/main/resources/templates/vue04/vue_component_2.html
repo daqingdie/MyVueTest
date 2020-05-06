@@ -1,0 +1,105 @@
+<!--
+    标题:学习vue的组件化的基本使用(2)
+    时间:2020.4.29
+    内容:（1）组件注册的语法糖
+        （2）模板的分离写法
+        (3)组件的数据存放
+      （4）父组件传参给子组件
+      (5)子传参给父组件（自定义事件）
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的组件化的基本使用(2)</title>
+</head>
+<body>
+<div id="app">
+    <com1 ></com1>
+
+    <!--在这里将父组件的数据赋值给子组件的参数，格式为：子组件参数名="父组件参数名"-->
+    <!--当参数名是驼峰表达式时，须改写，如cMessage=>c-message-->
+    <com2 :c-message="message" @fromsun="fromSum" ></com2>
+    <h2>来自子组件的信息：{{fromSunText}}</h2>
+</div>
+<!--模板分离第一种格式，<script type="text/x-template" id="组件模板名">-->
+<script type="text/x-template" id="com1">
+    <div>
+        <h2>语法糖+模板分离全局组件标题</h2>
+        <h3>语法糖+模板分离全局组件组件内容</h3>
+    </div>
+</script>
+<!--模板分离第二种格式（更常用），使用<template id="组件模板名">-->
+
+<template id="com2">
+    <div>
+        <h2>{{tittle}}</h2>
+        <h3>{{text}}</h3>
+        <h3>测试：{{cMessage}}+{{mtest}}</h3>
+        <button @Click="tuFa">传参数给父组件</button>
+    </div>
+</template>
+<script src="js/vue.js"></script>
+<script>
+    //全局组件的语法糖写法+模板分离
+    Vue.component('com1',{
+        template:'#com1',
+    })
+
+    const app = new Vue({
+        el: "#app",
+        components:{
+            com2:{
+                template:'#com2',
+                //组件的数据存放格式，data：function（）{return {数据名：数据}}
+                //data为一个方法，是为了每个组件的数据有自己的作用域
+                data:function () {
+                    return {
+                        tittle:'语法糖+模板分离局部组件标题',
+                        text: '语法糖+模板分离局部组件组件内容',
+                        sunText: '子组件传给父组件的内容',
+                    }
+                },
+
+                //接受父组件传过来的参数
+                //第一种，直接使用数组类型，格式为props:["数据名","数据名"]
+                // props:['cmessage','mtest']
+
+                //第二种，用对象类型，可以对参数进行类型限制和默认值
+                props:{
+                    cMessage:String,        //格式：属性名:类型或类型数组(可选:String,Number,Boolean,Array,Object,Date.Function,Symbol及自定义类型)
+                    mtest:{                 //格式：属性名:{type:类型,default:默认值}
+                        type:String,
+                        default:'默认测试内容'
+                        //required:布尔值,为真时必须给该属性赋值
+                        //当type为object或数组时,default必须为一个函数,返回值为对象对数组,default:function(){return 对象or数组}
+                        //validation可以怼传过来的值进行验证,返回-1即报错
+                    }
+                },
+
+                //子传参给父组件
+                //在方法里使用this.$emit(传出的方法名,数据)
+                //然后父组件在子组件标签处添加@传出的方法名="父组件的方法"，即可捕获到子组件传出的方法并做出反应
+                //父组件方法会自动接收来自子组件传出的数据，然后即可对该数据进行操作
+                methods:{
+                    tuFa() {
+                        this.$emit('fromsun',this.sunText);
+                    },
+                }
+            },
+        },
+        data:{
+            message: '传给子组件的内容',
+            fromSunText:'',
+        },
+        methods:{
+            fromSum(message) {
+                console.log('监听到子组件的事件',message)
+                this.fromSunText = message;
+            }
+        }
+    });
+</script>
+</body>
+</html>

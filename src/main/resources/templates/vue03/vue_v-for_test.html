@@ -1,0 +1,38 @@
+<!--
+    标题:学习vue的v-for的小练习
+    时间:2020.4.28
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的v-for的小练习</title>
+    <style type="text/css">
+        .active{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<script src="js/vue.js"></script>
+<div id="app">
+    <ul>
+        <li v-for="(m,index) in movies"  :class="{'active':index === selectIndex}"
+        @Click="selectIndex=index">{{m}}</li>
+    </ul>
+</div>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            movies:["海贼王","火影忍者","哆啦A梦","蜡笔小新"],
+            selectIndex:0,
+        },
+
+    });
+</script>
+
+</body>
+</html>

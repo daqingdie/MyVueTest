@@ -1,0 +1,87 @@
+<!--
+    标题:学习vue的model的用法及其修饰符（lazy，number，trim）
+    时间:2020.4.29
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的model的用法及其修饰符</title>
+</head>
+<body>
+<div id="app">
+    <h2>当model修饰文本框时：</h2>
+    <h3>
+        <!-- v-model是一个语法糖，是由v-bind+v-on形成双向绑定-->
+        使用v-model：<input type="text" v-model="message"/>
+        使用v-bind+v-on:<input type="text" :value="message" @input="message=$event.target.value"/>
+        {{message}}
+        <!--使用lazy修饰时，只在按下回车键或失去焦点时才更新数据-->
+        <!--使用number修饰时，会将绑定的值的数据类型固定为数字类型-->
+        <!--使用trim修饰时，会自动去除绑定的值左右两边的空格-->
+        <h3>
+            使用修饰符lazy：<input type="text" v-model.lazy="message"/>
+        </h3>
+    </h3>
+    <h2>当model修饰radio单选框时：</h2>
+        <!--使用v-model绑定单选框可以不用name属性来完成互斥，model修饰的值与value绑定 -->
+        <label for="male"><input type="radio" id="male" value="男" v-model="sex">男</label>
+        <label for="female"><input type="radio" id="female" value="女" v-model="sex">女</label>
+        <h4>你选择的是性别是:{{sex}}</h4>
+
+
+    <h2>当model修饰checkbox时：</h2>
+    <!--model绑定的值为一个且没有value时，其值是布尔类型，大于一个时，可以用数组来存放选中的value-->
+    <h4><input type="checkbox" v-model="isAgree" >同意协议</h4><h4>是否同意协议:{{isAgree}}</h4>
+    <h4>
+        <input type="checkbox" value="唱" v-model="hobby"/>唱
+        <input type="checkbox" value="跳" v-model="hobby"/>跳
+        <input type="checkbox" value="Rap" v-model="hobby"/>Rap
+        <input type="checkbox" value="篮球" v-model="hobby"/>篮球
+    </h4>
+    <h4>您选择的特长是：{{hobby}}</h4>
+
+    <h2>当model修饰select时：</h2>
+    <!--当model绑定的值为一个时，直接用一个字符串，多个时用数组存放（用对象存放时也会自动转化为数组）-->
+    <h4 key="aaa">
+        单选时：
+        <select name="abc" v-model="fruit">
+            <option value="苹果" >苹果</option>
+            <option value="香蕉" >香蕉</option>
+            <option value="火龙果" >火龙果</option>
+            <option value="榴莲" >榴莲</option>
+        </select>
+        您选择的水果是：{{fruit}}
+    </h4>
+    <h4 key="bbb">
+        多选时：
+        <select name="abcd" v-model="fruits" multiple>
+            <option value="苹果" >苹果</option>
+            <option value="香蕉" >香蕉</option>
+            <option value="火龙果" >火龙果</option>
+            <option value="榴莲" >榴莲</option>
+        </select>
+        您选择的水果是：{{fruits}}
+    </h4>
+
+</div>
+<script src="js/vue.js"></script>
+<script>
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            message: "双向绑定的内容",
+            sex: '男',
+            isAgree: false,
+            hobby: [],
+            fruit: '火龙果',
+            fruits: [],
+        },
+    });
+</script>
+
+</body>
+</html>

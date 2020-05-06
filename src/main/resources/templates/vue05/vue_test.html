@@ -1,0 +1,35 @@
+<!--
+    标题:自己摸索前后端交互的小练习
+    时间:2020.4.30
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前后端交互小练习</title>
+</head>
+<body>
+<div id="app">
+    <span>用户名:{{userName}}</span><br />
+    <span>用户ID:{{id}}</span><br />
+    <span>用户密码:{{password}}</span><br />
+    <span>用户权限:{{power}}</span><br />
+
+</div>
+<script src="js/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data:{
+            id:0,
+            userName:'',
+            password:'',
+            power:1,
+        },
+
+    });
+</script>
+</body>
+</html>

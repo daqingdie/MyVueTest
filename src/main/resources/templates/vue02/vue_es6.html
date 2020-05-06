@@ -1,0 +1,68 @@
+<!--
+    标题:学习ES6的var，let和const的区别
+    时间:2020.4.27
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习ES6的var，let和const的区别</title>
+</head>
+<body>
+<script src="js/vue.js"></script>
+<div><button>按钮1</button>
+    <button>按钮2</button>
+    <button>按钮3</button>
+    <button>按钮4</button></div>
+<script>
+    /*
+        第一种方法，在es5中，直接使用var定义i，再直接循环加监听器
+        由于var类型没有作用域，即相当于全局变量
+        当按钮点击时循环已经走完，i值为4
+     */
+    // var btn = document.getElementsByTagName("button");    //将button标签归组
+    // for(var i=0;i<btn.length;i++){
+    //     btn[i].addEventListener("click",function () {     //子对象添加监听器
+    //         console.log("方法一按钮" + i + "被点击了");
+    //     });
+    // }
+
+    /*
+        第二种方法，方法一的基础上添加闭包
+        因为函数里的变量是有作用域的
+     */
+    // var btn = document.getElementsByTagName("button");    //将button标签归组
+    // for(var i=0;i<btn.length;i++){
+    //     var a=function (i){                               //闭包相当于创建一个函数对象，然后当场拿目前的i去调用，之后监听器输出的i是函数自己的
+    //                                                        // 变量i而非全局的i
+    //         btn[i].addEventListener("click",function () {     //子对象添加监听器
+    //             console.log("方法二按钮" + i + "被点击了");
+    //         });
+    //     }(i);
+    // }
+
+    /*
+        第三种方法，在es6中有let的概念，
+        let是有作用域的，类似方法一的写法即可
+     */
+    var btn = document.getElementsByTagName("button");    //将button标签归组
+    for(let i=0;i<btn.length;i++){
+        btn[i].addEventListener("click",function () {     //子对象添加监听器
+        console.log("方法三按钮" + i + "被点击了");
+        });
+    }
+
+    /*
+        const的用法：
+        const的作用域与let相同
+        const常用来定义常量，在开发中比起let更推荐用const
+        const在定义是必须指定初始值
+        当const定义基本数据类型后，不能修改其值，但定义对象后，可修改其子属性（即const是绑定内存地址而不是固定数据）
+     */
+
+
+</script>
+</body>
+</html>

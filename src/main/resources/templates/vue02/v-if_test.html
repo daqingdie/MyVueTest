@@ -1,0 +1,37 @@
+<!--
+    标题:学习vue的使用v-if登录切换的小练习
+    时间:2020.4.27
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的使用v-if登录切换的小练习</title>
+</head>
+<body>
+<div id="app">
+    <span v-if="isShow">
+        <label for="userName">用户名：</label>
+        <input type="text" placeholder="请输入用户名" id="userName" key="1">
+    </span>
+    <span v-else>
+        <label for="userMail">邮箱：</label>
+        <input type="text" placeholder="请输入邮箱" id="userMail" key="2">
+    </span>
+    <button @Click="isShow=!isShow">切换登录类型</button>
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            isShow:true,
+        },
+
+    });
+</script>
+</body>
+</html>

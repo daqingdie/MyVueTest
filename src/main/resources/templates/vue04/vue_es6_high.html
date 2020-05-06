@@ -1,0 +1,66 @@
+<!--
+    标题:学习es6的高阶函数filter，map，reduce
+    时间:2020.4.29
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习es6的高阶函数filter，map，reduce</title>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <li>原始数组：{{nums}}</li>
+        <li>将原数组利用filter找出小于100的子数组：{{newNums}}</li>
+        <li>将原数组利用map方法对小于100的值翻倍的子数组：{{newNums2}}</li>
+        <li>将原数组利用reduce方法对数组的值进行递归计算并返回改值：{{newNums3}}</li>
+    </ul>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            nums: [80, 50, 102, 50, 60, 70, 401],
+        },
+        computed:{
+            /*在使用filter函数时，需要传入一个回调函数，会自动将当前数组子属性作为该回调函数参数进行迭代，
+                回调函数返回值为布尔值，为真即保存，为假即删除
+                可用来过滤不符合指定条件的数据*/
+            newNums:function () {
+                return this.nums.filter(n=>n<100)
+                // return this.nums.filter(function (num) {
+                //     if(num<100)
+                //         return true;
+                // });
+            },
+            /*在使用map函数时，需要传入一个回调函数，参数类似filter
+              会将回调函数的返回值替代原子属性
+              可用来做对数组属性的计算改值*/
+            newNums2:function () {
+                return this.nums.map(n => n * 2);
+                // return this.nums.map(function (num) {
+                //     if (num < 100) {
+                //         return num*2;
+                //     }
+                //     return num;
+                // })
+            },
+            /*在使用reduce函数时，格式为reduce（回调函数，初始值），回调函数的参数格式为（前一次返回的值/初始值，当前数组的子属性）
+            * 返回的值为最后一次计算得出的值*/
+            newNums3:function () {
+                return this.nums.reduce((pre, n) => pre + n, 1);
+                // return this.nums.reduce(function (pre,num) {
+                //     return pre+num;
+                // },0)
+            },
+
+        }
+
+    });
+</script>
+</body>
+</html>

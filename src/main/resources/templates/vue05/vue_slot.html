@@ -1,0 +1,69 @@
+<!--
+    标题:学习vue的插槽的基本使用
+    时间:2020.4.30
+    内容:教程里使用的是slot和slot-scope，这两种在vue2.6之后被废弃
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的插槽的基本使用</title>
+</head>
+<body>
+<div id="app">
+    <cpn>
+        <!--使用slot="插槽名"来选择替代特定的插槽，否则就是替代所有未命名的插槽-->
+        <!--v-slot使用格式：v-slot:插槽名（无需双引号）-->
+        <template v-slot:myslot2>
+            <button >自定义插槽内容</button>
+        </template>
+    </cpn>
+    <cpn>
+        <!--使用格式，slot-scope='自定义名字',提取数据时使用，自定义的名字.data-->
+        <!--v-slot可用v-slot替代-->
+        <template v-slot    ="m">
+            <ul><li v-for="(m,index) in m.data">{{index}}.{{m}}</li></ul>
+        </template>
+    </cpn>
+        <!--格式：v-slot:插槽名="自定义名字"
+        -->
+    <cpn>
+        <template v-slot:myslot3="m">
+            <ul><li v-for="(m,index) in m.data">{{index}}:{{m}}</li></ul>
+        </template>
+    </cpn>
+
+</div>
+<template id="cpn">
+    <div>
+        <h2>组件的标题</h2>
+        <!--在定义插槽时可以怼插槽进行命名,格式为:name="名字",-->
+        <!--插槽里可以定义默认元素-->
+        <slot name="myslot2"><span>组件预留的插槽</span></slot><br />
+
+        <!--slot标签里可以有:data="数据",可以将数据传给父组件使用-->
+        <slot :data="movies" ><ul><li v-for="m in movies">{{m}}</li></ul></slot><br />
+        <slot :data="movies" name="myslot3"></slot><br />
+    </div>
+</template>
+<script src="js/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        components: {
+            cpn: {
+                template: "#cpn",
+                data:function () {
+                    return {
+                        movies:["海贼王","火影忍者","哆啦A梦","蜡笔小新"],
+                    }
+                }
+
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

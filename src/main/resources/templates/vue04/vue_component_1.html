@@ -1,0 +1,65 @@
+<!--
+    标题:学习vue的组件化的基本使用
+    时间:2020.4.29
+    内容:（1）组件的创建、注册和使用
+        （2）全局组件和局部组件
+        （3）父组件与子组件
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的组件化的基本使用</title>
+</head>
+<body>
+<div id="app">
+    <!--组件必须在vue控制的元素下面才能调用-->
+    <mycom></mycom>
+    <facom></facom>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    //创建组件格式：const 组件名=Vue.extend（{template：'前端代码'}）
+    const MyCom=Vue.extend({
+        template:`
+        <div>
+        <h2>组件标题</h2>
+        <h3>组件内容</h3>
+        </div>`,
+    });
+    const sonCom=Vue.extend({
+        template:`
+        <div>
+        <h2>子组件标题</h2>
+        <h3>子组件内容</h3>
+        </div>`,
+    });
+    const FaCom=Vue.extend({
+        template:`
+        <div>
+        <h2>父组件标题</h2>
+        <h3>父组件内容</h3>
+        <soncom></soncom>
+        </div>`,
+        components:{
+            soncom:sonCom,
+        }
+    });
+
+    //注册组件格式：Vue.component('标签名（不能大写）',组件名)
+    //直接用Vue调用注册的组件是全局组件，可在所有vue实例中运行
+    //在vue实例中注册的是局部组件，仅可在该vue实例绑定的元素下运行，注册格式为components:{标签名：组件名.....}
+    // Vue.component('mycom',MyCom);
+
+    const app = new Vue({
+        el: "#app",
+        components:{
+            mycom:MyCom,
+            facom:FaCom,
+        },
+    });
+
+</script>
+</body>
+</html>

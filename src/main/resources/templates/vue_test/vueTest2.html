@@ -1,0 +1,67 @@
+<!--
+    标题:学习vue的基础(1)
+    时间:2020.4.24-2020.4.26
+    内容:部分见注释
+        mustache语法:{{}}
+        生命周期及钩子函数(回调函数)
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的基础(1)</title>
+    <!--<style>-->   <!-- 搭配v-cloak使用，vue在解析到该Dom时会解除cloak -->
+        <!--[v-cloak]{-->
+            <!--display: none;-->
+        <!--}-->
+    <!--</style>-->
+</head>
+<body>
+<script src="js/vue.js"></script>
+<div id="app">  <!-- 可以加v-cloak属性 -->
+    <p v-once >{{message}}</p>{{message}}<br>
+    <p v-pre >{{message}}</p>
+    <ul>
+        <li v-for="item in movies">{{item}}</li>
+        <li v-for="book in books">{{'图书名称：'+book.name+'  价格：'+book.price}}</li>
+    </ul>
+    <h2>当前计数：{{counter}}</h2>
+    <button @click="add">+</button>
+    <button @click="sub">-</button>
+    <h5 v-html="url"></h5>
+    <span :title="float">在这里悬浮看内容</span>
+    <!--<img :src="imgUrl" style="display: none"/>  图片占空间太大先隐藏，有需要再打开-->
+
+</div>
+<script>
+    let app=new Vue({
+        //vue目前需要掌握的三个属性:el(绑定dom),data(存放数据),methods(存放方法),格式类似键值对
+        //vue的mvvm模式,data相当于model,dom相当于view,Vue对象中的其他相当于ViewModel
+        el:'#app',
+        data:{
+            message:'文本',       //学习vue的声明式属性和v-once属性,文本显示也可以用v-text="",但不够灵活
+                                //v-pre可以屏蔽解析
+            movies:['海贼王','哆啦A梦','火影忍者','妖精的尾巴'], //学习vue的v-for="item in items"用法
+            books:[{name:'java',price:'11.99'},{name:'android',price:'22.99'},{name:'python',price:'18.99'}], //学习列表子显示及多属性连接
+            counter:'0',    //学习v-on:click="方法名"(绑定监听器)@click="方法名"(语法糖)
+            url:'<a href="http://www.baidu.com">百度一下你就知道</a>',  //学习v-html=""的用法
+            float:'这里是悬浮显示的内容', //学习v-bind:的用法,可以绑定标签的属性,例如a的href,img的src等,缩写就一个":"
+            imgUrl: 'img/3.jpg' ,       //本地图片要放在static下，目录直接从static的子目录开始就行，网络图片比较简单
+        },
+        methods:{
+            add:function () {
+                console.info('你点击了add');
+                this.counter++;
+            },
+            sub:function () {
+                console.info('你点击了sub');
+                this.counter--;
+            }
+        }
+    })
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!--
+    标题:学习vue的v-for中的响应式方法
+    时间:2020.4.28
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的v-for中的响应式方法</title>
+</head>
+<body>
+<script src="js/vue.js"></script>
+<div id="app">
+    <ul>
+        <li v-for="item in items" :key="item">{{item}}</li>
+    </ul>
+
+    <!--直接通过索引来修改数组元素的值不是响应式的-->
+    <!--响应式方法push(参数),可以将参数添加到数组，可添加一个或多个-->
+    <button @Click="push">添加一个元素到结尾</button><br><br>
+
+    <!--响应式方法pop()，会删除数组最后一个元素-->
+    <button @Click="pop">删除最后一个值</button><br><br>
+
+    <!--响应式方法shift()，会删除数组的第一个元素-->
+    <button @Click="shift">删除第一个值</button><br><br>
+
+    <!--响应式方法splice(start,num,...items),start为起点，num为要删除的个数，items为删除后添加的数据
+        通过控制，num，和items，可达到添加，删除，替换的效果-->
+    <button @Click="splice(1,0,'进击的巨人','死神')">在2的位置添加元素</button><br><br>
+    <button @Click="splice(1,1,'进击的巨人')">在2的位置替换元素</button><br><br>
+    <button @Click="splice(1,1)">在2的位置删除元素</button><br><br>
+
+    <!--响应式sort（）用于排列-->
+    <button @Click="sort">排序</button><br><br>
+
+    <!--响应式reverse（）用于反转-->
+    <button @Click="reverse">反转</button><br><br>
+
+
+</div>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data:{
+            items: ["火影忍者", "海贼王", "哆啦a梦","蜡笔小新"]
+        },
+        methods:{
+            push() {
+                this.items.push("进击的巨人");
+            },
+            pop(){
+                this.items.pop();
+            },
+            shift(){
+                this.items.shift();
+            },
+            splice(s,n,...ls){
+                this.items.splice(s, n, ...ls);
+            },
+            sort(){
+                this.items.sort();
+            },
+            reverse() {
+                this.items.reverse();
+            }
+        },
+    });
+</script>
+
+</body>
+</html>

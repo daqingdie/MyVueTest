@@ -1,0 +1,49 @@
+<!--
+    标题:学习vue的v-if,v-else-if,v-else用法
+    时间:2020.4.27
+    内容:见注释
+    BY:吴烈清
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习vue的v-if用法</title>
+</head>
+<body>
+<div id="app">
+    <h2 v-if="isShow">{{message}}</h2>
+    <h2   v-else>内容被隐藏了</h2>       <!-- 会与最近的v-if进行配对，不用重新写内容-->
+    <button @Click="btn">点击显示</button>
+
+
+
+   <br>请输入成绩： <input type="text" name="score" v-model="s" @keyup.enter="submit(s)">
+    <h2 v-if="score>=90">优秀</h2>
+    <h2 v-else-if="score>=60">良好</h2>
+    <h2 v-else-if="score>=0">不及格</h2>
+    <h2 v-else></h2>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    const app=new Vue({
+        el: "#app",
+        data: {
+            message:'显示的内容',
+            isShow:false,
+            score:-1,
+            s:0,
+        },
+        methods: {
+            btn() {
+                this.isShow = !this.isShow;
+            },
+            submit(s) {
+                this.score=this.s;
+            },
+        },
+    });
+</script>
+
+</body>
+</html>
